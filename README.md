@@ -3,7 +3,7 @@
 Esta é uma pequena aplicação front-end CRUD para gerenciar registros bancários com autenticação e controle de permissão. Ela é desenvolvida utilizando os frameworks Angular 15 e Bootstrap 5.
 
 <p align="center">
-  <img src="src\assets\layout.jpg" alt="Descrição da imagem">
+  <img src="src/assets/layout.jpg" height="400px" alt="Descrição da imagem">
 </p>
 
 ## Escopo
