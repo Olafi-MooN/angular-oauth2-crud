@@ -1,0 +1,75 @@
+<div class="container">
+  <h3 class="mt-4">{{title}}</h3>
+
+  <!-- Form -->
+  <form [formGroup]="bankForm" class="m-auto needs-validation"
+    [ngClass]="{'was-validated': bankForm.invalid && bankForm.dirty}" (ngSubmit)="onSubmit()" novalidate>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="codigo" class="form-label mb-0 mt-4">Código</label>
+        <input type="text" class="form-control" id="code" formControlName="codigo" required>
+        <div
+          *ngIf="bankForm.controls['codigo'].invalid && (bankForm.controls['codigo'].dirty || bankForm.controls['codigo'].touched)"
+          class="invalid-feedback">
+          Código é obrigatório.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="status" class="form-label mb-0 mt-4">Status</label>
+        <select class="form-select" id="status" aria-placeholder="select" formControlName="status" required>
+          <option *ngFor="let status of bankStatus" [ngValue]="status"
+            [selected]="status.id ===  bankForm.controls['status'].value?.id">{{status.descricao}}</option>
+        </select>
+        <div
+          *ngIf="bankForm.controls['status'].invalid && (bankForm.controls['status'].dirty || bankForm.controls['status'].touched)"
+          class="invalid-feedback">
+          Código é obrigatório.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label for="description" class="form-label mb-0 mt-4">Descrição</label>
+      <textarea class="form-control" id="description" formControlName="descricao" required></textarea>
+      <div
+        *ngIf="bankForm.controls['descricao'].invalid && (bankForm.controls['descricao'].dirty || bankForm.controls['descricao'].touched)"
+        class="invalid-feedback">
+        Código é obrigatório.
+      </div>
+    </div>
+    <div class="d-flex w-100 align-items-center justify-content-end mt-3 gap-3">
+      <button class="btn btn-primary" [routerLink]="['/application/bank']" type="button">Voltar</button>
+      <button class="btn btn-danger" [ngClass]="{'d-none': !id}" *appRolePermission="['ROLE_BANCO_DEL']"
+        type="button">Deletar</button>
+      <button class="btn btn-success" type="submit" [disabled]="bankForm.invalid"
+        *appRolePermission="['ROLE_BANCO_UPD', 'ROLE_BANCO_ADD']">Salvar</button>
+    </div>
+  </form>
+
+  <!-- Modal Delete Bank -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Deseja realmente excluir?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body mxh-400px">
+          <h6>O seguinte banco sera excluído</h6>
+          <ol class="list-group list-group-numbered">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">{{bankForm.value.codigo}}</div>
+                {{bankForm.value.descricao}}
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-success" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+            (click)="deleteBankById(id)">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

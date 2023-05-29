@@ -1,27 +1,112 @@
+# Aplicação Angular CRUD com Autenticação e Controle de Permissão
+
+Esta é uma pequena aplicação front-end CRUD para gerenciar registros bancários com autenticação e controle de permissão. Ela é desenvolvida utilizando os frameworks Angular 15 e Bootstrap 5.
+
+<p align="center">
+  <img src="src\assets\layout.jpg" alt="Descrição da imagem">
+</p>
+
+## Escopo
+
+A aplicação inclui os seguintes componentes:
+
+- Formulário de Login
+- Formulário Principal
+- Formulário de Listagem de Registros
+- Formulário de Detalhes do Registro
+
+## Template
+
+Foi criado um template personalizado para aplicação
+
+## Detalhes da Atividade
+
+A aplicação é baseada em autenticação OAuth2, onde você precisará fornecer um clientId, clientSecret, nome de usuário e senha para obter um token de acesso. Esse token será retornado pela API de autenticação e será usado para autorizar suas solicitações aos recursos da aplicação.
+
+O token de acesso será no formato JWT (JSON Web Token) e conterá as informações das roles do usuário. As roles definem as permissões de CRUD (Create, Read, Update, Delete) que o usuário possui na aplicação.
+
+Assim, a aplicação permite autenticar os usuários, controlar suas permissões com base nas roles, e realizar operações de CRUD nos registros bancários por meio da API.
+
+## Documentação
+
+### Usuários
+
+| Usuário | Descrição                    |
+| ------- | ---------------------------- |
+| admin   | Administrador - Acesso total |
+| normal  | Normal - Somente leitura     |
+
+### Roles
+
+| Usuário | Roles                                                          |
+| ------- | -------------------------------------------------------------- |
+| admin   | ROLE_BANCO_LST, ROLE_BANCO_ADD, ROLE_BANCO_EDT, ROLE_BANCO_DEL |
+| normal  | ROLE_BANCO_LST                                                 |
+
+### API de Autenticação
+
+| Parâmetro        | Valor                                                                                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grant Type       | password                                                                                                                                         |
+| Access Token URL | [http:[private-url]/realms/[name-service]/protocol/openid-connect/token](http:[private-url]/realms/[name-service]/protocol/openid-connect/token) |
+| Client ID        | [private]-web                                                                                                                                    |
+| Client Secret    | [private-hash]                                                                                                                                   |
+| Username         | admin ou normal                                                                                                                                  |
+| Password         | 123@teste                                                                                                                                        |
+| Scope            | [private]-web-roles                                                                                                                              |
+
+### CRUD API
+
+| Method | URL             | HTTP Responses     |
+| ------ | --------------- | ------------------ |
+| GET    | /v1/bancos      | 200, 401, 403      |
+| POST   | /v1/bancos      | 201, 400, 401, 403 |
+| GET    | /v1/bancos/{id} | 200, 401, 403, 404 |
+| PUT    | /v1/bancos/{id} | 200, 400, 401, 403 |
+| DELETE | /v1/bancos/{id} | 200, 401, 403, 404 |
+
 # PrincetonLemitar
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.3.
+## Como executar a aplicação
 
-## Development server
+Para executar a aplicação, siga as etapas abaixo:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. Instale as dependências do projeto executando o seguinte comando no terminal:
 
-## Code scaffolding
+```
+npm i
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+2. Configure as variáveis de ambiente:
 
-## Build
+- Execute o comando a seguir para gerar os arquivos de ambiente:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  ```
+  ng generate environments
+  ```
 
-## Running unit tests
+- Localize os arquivos `environments.ts` e `environments.development.ts` dentro da pasta `src/environments`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Adicione as seguintes variáveis nos arquivos de ambiente:
 
-## Running end-to-end tests
+  ```typescript
+  export const environment = {
+    production: true,
+    apiUrl: "http://[private-url]",
+    oauth2AccessTokenUrl: "http://[private-url]/realms/[name-service]/protocol/openid-connect/token",
+    oauth2ClientId: "[private]-web",
+    oauth2ClientSecret: "[private-hash]",
+  };
+  ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+3. Execute a aplicação:
 
-## Further help
+- No terminal, execute o comando abaixo:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  ```
+  ng serve
+  ```
+
+- Após a compilação ser concluída com sucesso, acesse a aplicação em `http://localhost:4200`.
+
+Certifique-se de substituir `[private-url]`, `[name-service]`, `[private]-web` e `[private-hash]` pelas informações corretas de acordo com a configuração fornecida.

@@ -1,0 +1,97 @@
+<div class="container-fluid py-4">
+
+  <h4>Listagem de bancos</h4>
+
+  <!-- Search and Buttons -->
+  <div class="row mt-4">
+    <div class="col-4">
+      <input type="text" class="form-control" placeholder="Buscar pela descrição" (keyup)="buscar($event.target)"
+        *appRolePermission="['ROLE_BANCO_LST']" />
+    </div>
+    <div class="col-8  align-items-end">
+      <div class="d-flex align-items-center justify-content-end gap-2">
+
+        <button *appRolePermission="['ROLE_BANCO_ADD']" [routerLink]="['form']" type="button"
+          class="btn btn-success col-2">
+          Novo
+        </button>
+
+        <button *appRolePermission="['ROLE_BANCO_DEL']" class="btn btn-danger col-2" [disabled]="!hasSelectedBanks()"
+          data-bs-toggle="modal" data-bs-target="#deleteModal">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="content-table table-responsive-sm" *ngIf="!isLoading">
+    <table class="table m-auto mt-4" *appRolePermission="['ROLE_BANCO_LST']">
+      <thead>
+        <tr>
+          <th *appRolePermission="['ROLE_BANCO_DEL']" class="col-sm-1 ">
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <input class="form-check-input mt-0" type="checkbox" (change)="toggleSelectAll($event.target)"
+                aria-label="Checkbox for following text input" [checked]="everySelectedBanks()">
+            </div>
+          </th>
+          <th class="col-sm-1">Id</th>
+          <th class="col-1">Status</th>
+          <th class="col-1">Código</th>
+          <th class="col">Descrição</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bank of banks.content; index as i;" class="cursor-pointer" (click)="viewBankById(bank.id)">
+          <td (click)="$event.stopPropagation()" *appRolePermission="['ROLE_BANCO_DEL']">
+            <div class="d-flex justify-content-center align-items-center">
+              <input class="form-check-input" type="checkbox" (click)="$event.stopPropagation()"
+                (change)="bank.selected = !bank.selected" aria-label="Checkbox for following text input"
+                [checked]="bank.selected">
+            </div>
+          </td>
+          <td>{{bank.id}}</td>
+          <td>
+            <p class="badge rounded-pill text-bg-success  mb-0"
+              [ngClass]="{'text-bg-success': bank.status.id === 'A', 'text-bg-danger':  bank.status.id === 'I'}">
+              {{bank?.status?.descricao}}</p>
+          </td>
+          <td>{{bank?.codigo}}</td>
+          <td>{{bank?.descricao}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-loading [isLoading]="isLoading"></app-loading>
+
+  <app-pagination [totalPages]="totalPages" [disabled]="isLoading"
+    (onPageSelected)="setPageSelected($event)"></app-pagination>
+
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Deseja realmente excluir?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body mxh-400px">
+          <h6>Os seguintes bancos serão excluídos:</h6>
+          <ol class="list-group list-group-numbered">
+            <li *ngFor="let bank of selectedBanks(); let i = index"
+              class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">{{bank.codigo}}</div>
+                {{bank.descricao}}
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-success" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+            (click)="deleteSelectedBanks()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

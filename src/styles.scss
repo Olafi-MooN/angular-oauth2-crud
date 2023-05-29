@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr';
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.mxh-400px {
+  max-height: 400px;
+}
