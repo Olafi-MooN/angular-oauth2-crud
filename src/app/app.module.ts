@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthModule } from './modules/auth/auth.module';
 import { NotFoundComponent } from './core/layout/components/not-found/not-found.component';
 import { SharedModule } from './shared/shared.module';
@@ -22,7 +21,6 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   imports: [
     BrowserModule,
-    NgbModule,
     AppRoutingModule,
 
     // core & shared
