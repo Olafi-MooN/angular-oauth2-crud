@@ -94,7 +94,7 @@ Essa deve ser a estrutura para as variáveis de ambiente:<br><br>
 
 <br>
 
-- Adicione as seguintes variáveis nos arquivos de ambiente:
+- Adicione as seguintes variáveis nos arquivos de ambiente (`environment.ts`, `environment.development.ts`):
 
   ```typescript
   export const environment = {
