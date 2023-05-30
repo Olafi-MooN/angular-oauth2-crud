@@ -79,7 +79,8 @@ npm i
 
 <br><br> 2. Configure as variáveis de ambiente:
 
-- Crie uma pasta chamada environments em `src/environments` e então adicione as mais dois arquivos: `environment.ts`, `environment.development.ts`.
+- Crie uma pasta chamada environments em `src/environments`.
+- Adicione mais dois arquivos nessa pasta: `environment.ts`, `environment.development.ts`.
 
 <br>
 Essa deve ser a estrutura para as variáveis de ambiente:<br><br>
