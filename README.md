@@ -71,21 +71,27 @@ Assim, a aplicação permite autenticar os usuários, controlar suas permissões
 
 Para executar a aplicação, siga as etapas abaixo:
 
-1. Instale as dependências do projeto executando o seguinte comando no terminal:
+<br> 1. Instale as dependências do projeto executando o seguinte comando no terminal:
 
 ```
 npm i
 ```
 
-2. Configure as variáveis de ambiente:
+<br><br> 2. Configure as variáveis de ambiente:
 
-- Execute o comando a seguir para gerar os arquivos de ambiente:
+- Crie uma pasta chamada environments em `src/environments` e então adicione as mais dois arquivos: `environment.ts`, `environment.development.ts`.
 
-  ```
-  ng generate environments
-  ```
+<br>
+Essa deve ser a estrutura para as variáveis de ambiente:<br><br>
 
-- Localize os arquivos `environments.ts` e `environments.development.ts` dentro da pasta `src/environments`.
+├── src <br>
+└── app <br>
+└── assets <br>
+└── environments <br>
+⠀⠀⠀⠀⠀└── environment.ts<br>
+⠀⠀⠀⠀⠀└── environment.development.ts
+
+<br>
 
 - Adicione as seguintes variáveis nos arquivos de ambiente:
 
